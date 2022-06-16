@@ -8,7 +8,7 @@ if (args[0].Equals("downloader") && args[1] != null)
 {
     Console.WriteLine("Curseforge downloader!");
     string apiKey = args[1];
-    string[] modInfoFiles = Directory.GetFiles("mods/"); 
+    string[] modInfoFiles = Directory.GetFiles("mods"); 
     var webClient = new WebClient();  
     foreach (string modInfo in modInfoFiles)
     {
@@ -33,14 +33,14 @@ else if (args[0].Equals("packager") && args[1] != null && args[2] != null) {
     string currentPath = Environment.CurrentDirectory;
     string[] mods = Directory.GetFiles(currentPath).Where(s => s.Contains("jar")).ToArray();
 
-    if (!Directory.Exists(".\\builds"))
+    if (!Directory.Exists("builds"))
     {
-        Directory.CreateDirectory(".\\builds");
+        Directory.CreateDirectory("builds");
     }
     else
     {
-        Directory.Delete(".\\builds", true);
-        Directory.CreateDirectory(".\\builds");
+        Directory.Delete("builds", true);
+        Directory.CreateDirectory("builds");
     }
 
     foreach (string mod in mods)
@@ -49,18 +49,18 @@ else if (args[0].Equals("packager") && args[1] != null && args[2] != null) {
         string fileNameNoJar = fileName.Replace(".jar", "");
         string folderModName = fileName.Split("-")[0];
         Console.WriteLine(mod);
-        Directory.CreateDirectory( ".\\builds" + "\\" + folderModName + "\\mods");
-        File.Copy(mod, ".\\builds" + "\\" + folderModName + "\\mods" + "\\" + fileName);
-        ZipFile.CreateFromDirectory( ".\\builds" + "\\" + folderModName, currentPath + "\\builds" + "\\" + fileNameNoJar + ".zip");
-        Directory.Delete(".\\builds" + "\\" + folderModName, true);
+        Directory.CreateDirectory( "builds" + "\\" + folderModName + "\\mods");
+        File.Copy(mod, "builds" + "\\" + folderModName + "\\mods" + "\\" + fileName);
+        ZipFile.CreateFromDirectory( "builds" + "\\" + folderModName, currentPath + "\\builds" + "\\" + fileNameNoJar + ".zip");
+        Directory.Delete("builds" + "\\" + folderModName, true);
     }
 
-    ZipFile.CreateFromDirectory(".\\config\\", $".\\builds\\config-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
-    ZipFile.CreateFromDirectory(".\\animation", $".\\builds\\animation-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
-    ZipFile.CreateFromDirectory(".\\customnpcs", $".\\builds\\customnpcs-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
-    ZipFile.CreateFromDirectory(".\\resources", $".\\builds\\resources-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
-    Console.WriteLine($".\\{packname}-{packVersion}.zip ");
-    ZipFile.CreateFromDirectory(".\\builds", $".\\{packname}-{packVersion}.zip");
+    ZipFile.CreateFromDirectory("config", $"builds\\config-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    ZipFile.CreateFromDirectory("animation", $"builds\\animation-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    ZipFile.CreateFromDirectory("customnpcs", $"builds\\customnpcs-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    ZipFile.CreateFromDirectory("resources", $"builds\\resources-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    Console.WriteLine($"{packname}-{packVersion}.zip ");
+    ZipFile.CreateFromDirectory("builds", $"{packname}-{packVersion}.zip");
 }
 
 
