@@ -3,12 +3,12 @@ using System.Net;
 using Tomlyn;
 using Tomlyn.Model;
 
- 
+
 if (args[0].Equals("downloader") && args[1] != null)
 {
     Console.WriteLine("Curseforge downloader web based!");
     string apiKey = args[1];
-    string[] modInfoFiles = Directory.GetFiles(".\\mods"); 
+    string[] modInfoFiles = Directory.GetFiles("\\mods"); 
     var webClient = new WebClient();  
     foreach (string modInfo in modInfoFiles)
     {
