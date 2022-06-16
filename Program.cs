@@ -13,7 +13,7 @@ if (args[0].Equals("downloader") && args[1] != null)
     foreach (string modInfo in modInfoFiles)
     {
         Console.WriteLine(modInfo);
-        string slug = modInfo.Split(Path.PathSeparator).Last().Replace(".pw.toml","");
+        string slug = modInfo.Split(Path.DirectorySeparatorChar).Last().Replace(".pw.toml","");
         var model = Toml.ToModel(new StreamReader(modInfo).ReadToEnd());
         TomlTable curseforgeSection = (TomlTable)((TomlTable)model["update"])["curseforge"];
         long projectID = (long)curseforgeSection["project-id"];
@@ -45,7 +45,7 @@ else if (args[0].Equals("packager") && args[1] != null && args[2] != null) {
 
     foreach (string mod in mods)
     {
-        string fileName = mod.Split("\\").Last();
+        string fileName = mod.Split(Path.DirectorySeparatorChar).Last();
         string fileNameNoJar = fileName.Replace(".jar", "");
         string folderModName = fileName.Split("-")[0];
         Console.WriteLine(mod);
