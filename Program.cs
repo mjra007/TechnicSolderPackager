@@ -13,7 +13,7 @@ if (args[0].Equals("downloader") && args[1] != null)
     foreach (string modInfo in modInfoFiles)
     {
         Console.WriteLine(modInfo);
-        string slug = modInfo.Split('\\').Last().Replace(".pw.toml","");
+        string slug = modInfo.Split(Path.PathSeparator).Last().Replace(".pw.toml","");
         var model = Toml.ToModel(new StreamReader(modInfo).ReadToEnd());
         TomlTable curseforgeSection = (TomlTable)((TomlTable)model["update"])["curseforge"];
         long projectID = (long)curseforgeSection["project-id"];
@@ -45,20 +45,20 @@ else if (args[0].Equals("packager") && args[1] != null && args[2] != null) {
 
     foreach (string mod in mods)
     {
-        string fileName = mod.Split(@"\").Last();
+        string fileName = mod.Split(Path.PathSeparator).Last();
         string fileNameNoJar = fileName.Replace(".jar", "");
         string folderModName = fileName.Split("-")[0];
         Console.WriteLine(mod);
-        Directory.CreateDirectory( "builds" + "\\" + folderModName + "\\mods");
-        File.Copy(mod, "builds" + "\\" + folderModName + "\\mods" + "\\" + fileName);
-        ZipFile.CreateFromDirectory( "builds" + "\\" + folderModName, currentPath + "\\builds" + "\\" + fileNameNoJar + ".zip");
-        Directory.Delete("builds" + "\\" + folderModName, true);
+        Directory.CreateDirectory( "builds" + Path.PathSeparator + folderModName + Path.PathSeparator + "mods");
+        File.Copy(mod, "builds" + Path.PathSeparator + folderModName + Path.PathSeparator + "mods" + Path.PathSeparator + fileName);
+        ZipFile.CreateFromDirectory( "builds" + Path.PathSeparator + folderModName, currentPath + Path.PathSeparator + "builds" + Path.PathSeparator + fileNameNoJar + ".zip");
+        Directory.Delete("builds" + Path.PathSeparator + folderModName, true);
     }
 
-    ZipFile.CreateFromDirectory("config", $"builds\\config-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
-    ZipFile.CreateFromDirectory("animation", $"builds\\animation-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
-    ZipFile.CreateFromDirectory("customnpcs", $"builds\\customnpcs-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
-    ZipFile.CreateFromDirectory("resources", $"builds\\resources-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    ZipFile.CreateFromDirectory("config", $"builds{Path.PathSeparator}config-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    ZipFile.CreateFromDirectory("animation", $"builds{Path.PathSeparator}animation-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    ZipFile.CreateFromDirectory("customnpcs", $"builds{Path.PathSeparator}customnpcs-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    ZipFile.CreateFromDirectory("resources", $"builds{Path.PathSeparator}resources-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
     Console.WriteLine($"{packname}-{packVersion}.zip ");
     ZipFile.CreateFromDirectory("builds", $"{packname}-{packVersion}.zip");
 }
