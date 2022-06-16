@@ -59,6 +59,7 @@ else if (args[0].Equals("packager") && args[1] != null && args[2] != null) {
     ZipFile.CreateFromDirectory(".\\animation", $".\\builds\\animation-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
     ZipFile.CreateFromDirectory(".\\customnpcs", $".\\builds\\customnpcs-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
     ZipFile.CreateFromDirectory(".\\resources", $".\\builds\\resources-{packVersion}.zip", CompressionLevel.NoCompression, includeBaseDirectory: true);
+    Console.WriteLine($".\\{packname}-{packVersion}.zip ");
     ZipFile.CreateFromDirectory(".\\builds", $".\\{packname}-{packVersion}.zip");
 }
 
