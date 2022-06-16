@@ -24,7 +24,7 @@ jobs:
         dotnet build --no-restore  
         dotnet publish -o ./build 
         cd ./build
-        zip -r technicsolderpackager.zip
+        zip -r technicsolderpackager.zip ./
         cd ../
   
     - name: Create Release
