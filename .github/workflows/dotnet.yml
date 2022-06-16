@@ -23,7 +23,7 @@ jobs:
       run: | 
         dotnet build --no-restore  
         dotnet publish -o ./build 
-        cd /build
+        cd ./build
         zip -r technicsolderpackager.zip
         cd ../
   
