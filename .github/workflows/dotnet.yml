@@ -20,7 +20,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore  
+      run: dotnet build Release --no-restore  
       
     - name: Dotnet Publish 
       uses: EasyDesk/action-dotnet-publish@v1.0.0 
