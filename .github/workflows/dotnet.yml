@@ -20,7 +20,36 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build TechnicSolderPackager.csproj Release --no-restore  
+      run: | 
+        dotnet build --no-restore  
+        dotnet publish -c Release -o ./build linux-x64
+        zip -r technicsolderpackager.zip ./build
+  release: 
+    runs-on: ubuntu-latest  
+    steps:
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: "TechnicSoldePackager"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       
-    - name: Dotnet Publish 
-      uses: EasyDesk/action-dotnet-publish@v1.0.0 
+      - name: Upload TechnicSoldePackager artifact
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "technicsolderpackager.zip"
+          asset_name: "technicsolderpackager.zip"
+          asset_content_type: application/zip
+   
+      - name: Publish release
+        uses: eregon/publish-release@v1
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
