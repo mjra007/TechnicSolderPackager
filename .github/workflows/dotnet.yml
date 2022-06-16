@@ -34,7 +34,7 @@ jobs:
        draft: false
        prerelease: false
        release_name: "TechnicSoldePackager-1.0.0"
-       tag_name: pack
+       tag_name: ver-${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
       
