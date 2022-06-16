@@ -3,9 +3,7 @@ using System.Net;
 using Tomlyn;
 using Tomlyn.Model;
 
-args[0] = "packager";
-args[1] = "3.0";
-args[2] = "EnchantedOasis";
+ 
 if (args[0].Equals("downloader") && args[1] != null)
 {
     Console.WriteLine("Curseforge downloader!");
