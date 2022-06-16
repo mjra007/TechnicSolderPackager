@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: | 
         dotnet build --no-restore  
-        dotnet publish -c Release -o ./build linux-x64
+        dotnet publish TechnicSolderPackager.csproj -c Release -o ./build linux-x64
         zip -r technicsolderpackager.zip ./build
   
     - name: Create Release
