@@ -32,7 +32,7 @@ jobs:
        draft: false
        prerelease: false
        release_name: "TechnicSoldePackager"
-       tag: pack
+       tag_name: pack
       env:
         GITHUB_TOKEN: ${{ github.token }}
       
