@@ -33,7 +33,7 @@ jobs:
       with:
        draft: false
        prerelease: false
-       release_name: "TechnicSoldePackager-1.0.0"
+       release_name: "TechnicSoldePackager-${{ github.sha }}"
        tag_name: ver-${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
