@@ -15,12 +15,17 @@ namespace TechnicSolderPackager
             List<string> mods = new();
             Console.WriteLine("Starting to register mods!");
             foreach (string mod in newMods)
-            { 
+            {
                 string modName = mod.Split('-')[0];
                 string version = mod.Replace(".zip", "").Replace(mod.Split("-")[0]+"-", "");
+                Console.WriteLine($"===================Name:{modName} Version:{version}===================");
                 if (technicSolderUploader.DoesModExist(modName))
                 {
-                    if(technicSolderUploader.DoesModVersionExist(modName, version) == false){
+                    Console.WriteLine("This mod is registered already so only need to register the new version!");
+
+                    if(technicSolderUploader.DoesModVersionExist(modName, version) == false)
+                    {
+                        Console.WriteLine("This version does not exist will attempt to register it...");
                         Console.WriteLine($"Adding new mod version to solder! Mod: {modName}, Version: {version}");
                         if(technicSolderUploader.GetModID(modName) == -1)
                         {
@@ -34,6 +39,11 @@ namespace TechnicSolderPackager
                                 Console.WriteLine("Failed to add version {0} of {1}", version, modName);
                             }
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine("This mod version is already registered!");
+
                     } 
 
                 }
