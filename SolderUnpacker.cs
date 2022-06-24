@@ -8,8 +8,7 @@ namespace TechnicSolderPackager
         {
             string releaseFileName = args[1];
             string[] existingModFolders = Directory.GetDirectories("." + Path.DirectorySeparatorChar).Select(s => s.Replace("." + Path.DirectorySeparatorChar, "").ToLower()).ToArray();
-            List<string> modFilesThatNeedToBeHashed = new();
-
+            List<string> modFilesThatNeedToBeHashed = new(); 
 
             if (Directory.Exists("newBuild"))
             {
@@ -58,11 +57,13 @@ namespace TechnicSolderPackager
 
             if (File.Exists("NewMods.csv"))
             {
+                File.WriteAllText("NewMods.csv", string.Empty);
                 File.AppendAllText("NewMods.csv", string.Join($"{Environment.NewLine}", modFilesThatNeedToBeHashed));
             }
             else
             {
                 File.WriteAllText("NewMods.csv", string.Join($"{Environment.NewLine}", modFilesThatNeedToBeHashed));
+              
             }
         }
 
