@@ -8,7 +8,7 @@ namespace TechnicSolderPackager
             string username = args[1];
             string password = args[2];
             IEnumerable<string> newMods = File.ReadAllLines("NewMods.csv");
-            TechnicSolderUploader technicSolderUploader = new TechnicSolderUploader(username, password);
+            TechnicSolderUploader technicSolderUploader = new();
             technicSolderUploader.GetVersions("jei");
             technicSolderUploader.Login(username, password);
             List<string> mods = new();

@@ -17,16 +17,17 @@ namespace TechnicSolderPackager
     internal class TechnicSolderUploader
     {
 
-        ChromeDriver driver = new();
-        string username;
-        string password;
+        ChromeDriver driver;
         public HttpClient client = new HttpClient();
 
-        public TechnicSolderUploader(string username, string password)
-        {
-            this.username = username;
-            this.password = password; 
+        public TechnicSolderUploader()
+        { 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            ChromeOptions options = new();
+            options.AddArgument("--headless");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            driver = new(options);
         }
 
         public bool RegisterMod(string mod)

@@ -21,7 +21,7 @@ namespace TechnicSolderPackager
             }
 
             ZipFile.ExtractToDirectory(releaseFileName, "newBuild");
-
+           
             foreach (var zipFile in Directory.GetFiles("newBuild"))
             {
                 string modName = zipFile.Split(Path.DirectorySeparatorChar).Last().Split('-')[0];
