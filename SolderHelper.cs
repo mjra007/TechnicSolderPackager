@@ -8,10 +8,12 @@ namespace TechnicSolderPackager
             string username = args[1];
             string password = args[2];
             IEnumerable<string> newMods = File.ReadAllLines("NewMods.csv");
-            TechnicSolderUploader technicSolderUploader = new();
-            technicSolderUploader.GetVersions("jei");
+            Console.WriteLine($"Number of mods to register: {newMods.Count()}");
+            TechnicSolderUploader technicSolderUploader = new(); 
+            Console.WriteLine("Trying to login!");
             technicSolderUploader.Login(username, password);
             List<string> mods = new();
+            Console.WriteLine("Starting to register mods!");
             foreach (string mod in newMods)
             { 
                 string modName = mod.Split('-')[0];
