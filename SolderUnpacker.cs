@@ -57,7 +57,7 @@ namespace TechnicSolderPackager
 
             if (File.Exists("NewMods.csv"))
             {
-                File.WriteAllText("NewMods.csv", string.Empty);
+                File.AppendAllText("NewMods.csv", string.Empty+Environment.NewLine);
                 File.AppendAllText("NewMods.csv", string.Join($"{Environment.NewLine}", modFilesThatNeedToBeHashed));
             }
             else
