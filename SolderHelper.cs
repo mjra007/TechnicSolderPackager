@@ -9,7 +9,7 @@ namespace TechnicSolderPackager
             string password = args[2];
             IEnumerable<string> newMods = File.ReadAllLines("NewMods.csv");
             Console.WriteLine($"Number of mods to register: {newMods.Count()}");
-            TechnicSolderUploader technicSolderUploader = new(); 
+            TechnicSolderUploader technicSolderUploader = new(args[3]); 
             Console.WriteLine("Trying to login!");
             technicSolderUploader.Login(username, password);
             List<string> mods = new();
