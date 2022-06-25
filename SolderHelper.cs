@@ -20,6 +20,7 @@ namespace TechnicSolderPackager
             IP = ip;
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             ChromeOptions options = new();
+            options.AddArgument("--headless");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
             driver = new(options);
