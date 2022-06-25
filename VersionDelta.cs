@@ -18,9 +18,9 @@ namespace TechnicSolderPackager
 
         public void CompareVersions(string[] args)
         { 
-            string modpackSlug = args[2];
-            string apiIP  = args[3];
-            string version = args[4];
+            string modpackSlug = args[1];
+            string apiIP  = args[2];
+            string version = args[3];
 
             List<Mod> allModsNewVersion = BuildNewModsList(); 
             List<Mod> allModsOldVersion = GetModsInVersion(modpackSlug, GetLatestVersion(modpackSlug, apiIP), apiIP).ToList();
