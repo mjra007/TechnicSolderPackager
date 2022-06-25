@@ -17,14 +17,13 @@ namespace TechnicSolderPackager
         }
 
         public void CompareVersions(string[] args)
-        {
-            string oldVersion = args[1]; 
+        { 
             string modpackSlug = args[2];
             string apiIP  = args[3];
             string version = args[4];
 
             List<Mod> allModsNewVersion = BuildNewModsList(); 
-            List<Mod> allModsOldVersion = GetModsInVersion(modpackSlug, oldVersion, apiIP).ToList();
+            List<Mod> allModsOldVersion = GetModsInVersion(modpackSlug, GetLatestVersion(modpackSlug, apiIP), apiIP).ToList();
 
             List<Mod> removedMods = GetRemovedMods(allModsNewVersion, allModsOldVersion);
             List<Mod> versionChanges = GetVersionChanges(allModsNewVersion, allModsOldVersion);
@@ -150,6 +149,18 @@ namespace TechnicSolderPackager
                 return versionsAsArray.ToObject<List<Mod>>();
             }
             return new List<Mod>();
+        }
+
+        public string GetLatestVersion(string modpackSlug, string IP)
+        {
+            var response = client.GetStringAsync($"http://{IP}/api/modpack/{modpackSlug}");
+            var result = response.Result;
+            if (response.IsCompletedSuccessfully)
+            {
+                string latestVersion = (string)JObject.Parse(result)["latest"];
+                return latestVersion;
+            }
+            return string.Empty;
         }
 
     }
