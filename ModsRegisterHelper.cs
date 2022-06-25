@@ -10,8 +10,7 @@ namespace TechnicSolderPackager
             string username = args[1];
             string password = args[2];
             ModpackDelta modpackDelta = JsonSerializer.Deserialize<ModpackDelta>(File.ReadAllText($"ModpackDelta.json"));
-            SolderHelper solderHelper = new(args[3]); 
-            solderHelper.Login(username, password);   
+            SolderHelper solderHelper = new(args[3]);    
             Console.WriteLine("Trying to login!");
             solderHelper.Login(username, password); 
             Console.WriteLine("Starting to register mods!");
