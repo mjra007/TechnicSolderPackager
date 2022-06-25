@@ -31,20 +31,22 @@ namespace TechnicSolderPackager
             if (solderHelper.DoesModExist(mod.name))
             {
                 Console.WriteLine("This mod is registered already so only need to register the new version!"); 
-                RegisterVersion(solderHelper, mod);
+                RegisterVersion(solderHelper, mod); 
+                Thread.Sleep(1000);
             }
             else
             {
                 Console.WriteLine($"Registering new Mod: {mod.name}");
-                solderHelper.CreateMod(mod.name);
-
+                solderHelper.CreateMod(mod.name); 
+                Thread.Sleep(1000);
                 if (solderHelper.DoesModExist(mod.name) == false)
                 {
                     Console.WriteLine("Could not add mod {0}", mod.name);
                 }
                 else
                 {
-                    RegisterVersion(solderHelper, mod);
+                    RegisterVersion(solderHelper, mod); 
+                    Thread.Sleep(1000);
                 }  
             }
         }
