@@ -37,7 +37,7 @@ namespace TechnicSolderPackager
                 versionChanged = versionChanges
             }, new JsonSerializerOptions() {Encoder= JavaScriptEncoder.UnsafeRelaxedJsonEscaping, WriteIndented = true});
 
-            File.WriteAllText($"ModpackDelta-{version}.json", delta);
+            File.WriteAllText($"ModpackDelta.json", delta);
         }
 
 
