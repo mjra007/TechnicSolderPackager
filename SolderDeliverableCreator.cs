@@ -51,7 +51,7 @@ namespace TechnicSolderPackager
             ZipFile.CreateFromDirectory("builds", $"{packname}-{packVersion}.zip"); 
         }
 
-        private static void ApplyNewModNames(string[] mods, Dictionary<string, string> modNamesOverride)
+        public static void ApplyNewModNames(string[] mods, Dictionary<string, string> modNamesOverride)
         {
             foreach (string mod in mods)
             {
@@ -74,7 +74,7 @@ namespace TechnicSolderPackager
             }
         }
 
-        static Dictionary<string, string> GetModNameOverrides()
+       public static Dictionary<string, string> GetModNameOverrides()
         {
             Dictionary<string, string> modNames = new();
             if (File.Exists(".modnamesoverride"))

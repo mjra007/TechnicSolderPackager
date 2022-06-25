@@ -1,6 +1,6 @@
 ﻿using TechnicSolderPackager;
+ 
 
-  
 switch (args[0])
 {
     //downloads mods listed in packwiz
@@ -21,8 +21,11 @@ switch (args[0])
         break; 
     //tries to register mods on solder
     case "uploader":
-        SolderHelper.ExecuteUploader(args);
-        break; 
+        ModsRegisterHelper.RegisterDeltaVersion(args);
+        break;
+    case "delta":
+        new VersionDelta().CompareVersions(args);
+        break;
 }
 
 
