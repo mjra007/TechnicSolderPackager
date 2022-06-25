@@ -8,7 +8,6 @@ namespace TechnicSolderPackager
         {
             string releaseFileName = args[1];
             string[] existingModFolders = Directory.GetDirectories("." + Path.DirectorySeparatorChar).Select(s => s.Replace("." + Path.DirectorySeparatorChar, "").ToLower()).ToArray();
-            List<string> modFilesThatNeedToBeHashed = new(); 
 
             if (Directory.Exists("newBuild"))
             {
@@ -36,7 +35,6 @@ namespace TechnicSolderPackager
                         Console.WriteLine("    => Source: {0}", zipFile);
                         Console.WriteLine("    => Destination: {0}", Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
                         File.Copy(zipFile, Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
-                        modFilesThatNeedToBeHashed.Add(zipFile.Split(Path.DirectorySeparatorChar).Last());
                     }
                     else
                     {
@@ -51,19 +49,9 @@ namespace TechnicSolderPackager
                     Console.WriteLine("    => Source: {0}", zipFile);
                     Console.WriteLine("    => Destination: {0}", Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
                     File.Copy(zipFile, Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
-                    modFilesThatNeedToBeHashed.Add(zipFile.Split(Path.DirectorySeparatorChar).Last());
                 }
             }
-            modFilesThatNeedToBeHashed.Add("");
-            if (File.Exists("NewMods.csv"))
-            { 
-                File.AppendAllText("NewMods.csv", string.Join($"{Environment.NewLine}", modFilesThatNeedToBeHashed));
-            }
-            else
-            {
-                File.WriteAllText("NewMods.csv", string.Join($"{Environment.NewLine}", modFilesThatNeedToBeHashed));
-              
-            }
+          
         }
 
 
