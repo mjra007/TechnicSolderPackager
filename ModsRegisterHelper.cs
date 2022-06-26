@@ -23,6 +23,7 @@ namespace TechnicSolderPackager
             { 
                 Console.WriteLine($"===================Name:{mod.name} Version:{mod.version}===================");
                 RegisterMod(solderHelper, mod);
+                Thread.Sleep(5000);
             } 
         }
 
@@ -31,14 +32,12 @@ namespace TechnicSolderPackager
             if (solderHelper.DoesModExist(mod.name))
             {
                 Console.WriteLine("This mod is registered already so only need to register the new version!"); 
-                RegisterVersion(solderHelper, mod); 
-                Thread.Sleep(1000);
+                RegisterVersion(solderHelper, mod);  
             }
             else
             {
                 Console.WriteLine($"Registering new Mod: {mod.name}");
-                solderHelper.CreateMod(mod.name); 
-                Thread.Sleep(1000);
+                solderHelper.CreateMod(mod.name);  
                 if (solderHelper.DoesModExist(mod.name) == false)
                 {
                     Console.WriteLine("Could not add mod {0}", mod.name);
@@ -46,7 +45,6 @@ namespace TechnicSolderPackager
                 else
                 {
                     RegisterVersion(solderHelper, mod); 
-                    Thread.Sleep(1000);
                 }  
             }
         }
@@ -65,7 +63,6 @@ namespace TechnicSolderPackager
                 else
                 {
                     solderHelper.AddVersion(solderHelper.GetModID(mod.name), mod.version);
-                    Thread.Sleep(2000);
                     if (solderHelper.GetVersions(mod.name).Contains(mod.version) == false)
                     {
                         Console.WriteLine("Failed to add version {0} of {1}", mod.version, mod.name);

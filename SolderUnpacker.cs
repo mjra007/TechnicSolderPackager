@@ -28,8 +28,11 @@ namespace TechnicSolderPackager
                 {
 
                     Console.WriteLine(" => Mod folder already exists! ");
+                    IEnumerable<string> versions = Directory.GetFiles(modName).Select(s => s.Split(Path.DirectorySeparatorChar).Last());
+                    string fileName = zipFile.Split(Path.DirectorySeparatorChar).Last();
+
                     //if mod file doesnt exists
-                    if (Directory.GetFiles(modName).Any(s=>s.Equals(zipFile)))
+                    if (versions.Any(s=>s.ToLower().Equals(fileName.ToLower())))
                     { 
                         Console.WriteLine("   => Mod version already exists...");
                     }
