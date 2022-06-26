@@ -30,15 +30,15 @@ namespace TechnicSolderPackager
                     Console.WriteLine(" => Mod folder already exists! ");
                     //if mod file doesnt exists
                     if (Directory.GetFiles(modName).Any(s=>s.Equals(zipFile)))
+                    { 
+                        Console.WriteLine("   => Mod version already exists...");
+                    }
+                    else
                     {
                         Console.WriteLine("   => Copying new mod version to folder...");
                         Console.WriteLine("    => Source: {0}", zipFile);
                         Console.WriteLine("    => Destination: {0}", Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
                         File.Copy(zipFile, Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
-                    }
-                    else
-                    {
-                        Console.WriteLine("   => Mod version already exists...");
                     }
                 }
                 else
