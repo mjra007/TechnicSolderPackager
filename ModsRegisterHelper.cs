@@ -23,7 +23,7 @@ namespace TechnicSolderPackager
             { 
                 Console.WriteLine($"===================Name:{mod.name} Version:{mod.version}===================");
                 RegisterMod(solderHelper, mod);
-                Thread.Sleep(5000);
+                Thread.Sleep(10000);
             } 
         }
 
