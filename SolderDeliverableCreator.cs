@@ -48,7 +48,7 @@ namespace TechnicSolderPackager
             ZipFile.CreateFromDirectory($"resources", Path.Combine("builds", $"resources-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
             Console.WriteLine($"{packname}-{packVersion}.zip ");
             File.Delete($"{packname}-{packVersion}.zip");
-            ZipFile.CreateFromDirectory("builds", $"{packname}-{packVersion}.zip"); 
+            ZipFile.CreateFromDirectory("builds", $"{packname}-{packVersion}.zip", CompressionLevel.NoCompression, false); 
         }
 
         public static void ApplyNewModNames(string[] mods, Dictionary<string, string> modNamesOverride)
