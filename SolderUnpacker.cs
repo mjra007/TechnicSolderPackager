@@ -25,15 +25,15 @@ namespace TechnicSolderPackager
             foreach (var zipFile in Directory.GetFiles("newBuild"))
             {
                 string modName = zipFile.Split(Path.DirectorySeparatorChar).Last().Split('-')[0]; 
-                string fileName = zipFile.Split(Path.DirectorySeparatorChar).Last();
-                Console.WriteLine("Starting to extract {0}", zipFile);
+                string fileName = zipFile.Split(Path.DirectorySeparatorChar).Last(); 
+                Console.WriteLine("Starting to extract {0}", zipFile); 
+                Console.WriteLine("Filename: " + fileName);
                 if (existingModFolders.Contains(modName.ToLower()))
                 { 
                     Console.WriteLine(" => Mod folder already exists! ");
-                    IEnumerable<string> versions = Directory.GetFiles(modName).Select(s => s.Split(Path.DirectorySeparatorChar).Last());
+                    List<string> versions = Directory.GetFiles(modName).Select(s => s.Split(Path.DirectorySeparatorChar).Last()).ToList();
                   
                     Console.WriteLine("Versions: "+string.Join($",{Environment.NewLine}", versions));
-                    Console.WriteLine("Filename: " + fileName);
 
                     //if mod file doesnt exists
                     if (versions.Any(s=>s.ToLower().Equals(fileName.ToLower())))
