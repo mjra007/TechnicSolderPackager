@@ -24,13 +24,14 @@ namespace TechnicSolderPackager
            
             foreach (var zipFile in Directory.GetFiles("newBuild"))
             {
-                string modName = zipFile.Split(Path.DirectorySeparatorChar).Last().Split('-')[0];
+                string modName = zipFile.Split(Path.DirectorySeparatorChar).Last().Split('-')[0]; 
+                string fileName = zipFile.Split(Path.DirectorySeparatorChar).Last();
                 Console.WriteLine("Starting to extract {0}", zipFile);
                 if (existingModFolders.Contains(modName.ToLower()))
                 { 
                     Console.WriteLine(" => Mod folder already exists! ");
                     IEnumerable<string> versions = Directory.GetFiles(modName).Select(s => s.Split(Path.DirectorySeparatorChar).Last());
-                    string fileName = zipFile.Split(Path.DirectorySeparatorChar).Last(); 
+                  
                     Console.WriteLine("Versions: "+string.Join($",{Environment.NewLine}", versions));
                     Console.WriteLine("Filename: " + fileName);
 
@@ -43,8 +44,8 @@ namespace TechnicSolderPackager
                     {
                         Console.WriteLine("   => Copying new mod version to folder...");
                         Console.WriteLine("    => Source: {0}", zipFile);
-                        Console.WriteLine("    => Destination: {0}", Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
-                        File.Copy(zipFile, Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
+                        Console.WriteLine("    => Destination: {0}", Path.Combine(modName, fileName));
+                        File.Copy(zipFile, Path.Combine(modName, fileName));
                     }
                 }
                 else
@@ -53,8 +54,8 @@ namespace TechnicSolderPackager
                     Directory.CreateDirectory(modName);
                     Console.WriteLine("   => Copying new mod version to folder...");
                     Console.WriteLine("    => Source: {0}", zipFile);
-                    Console.WriteLine("    => Destination: {0}", Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
-                    File.Copy(zipFile, Path.Combine(modName, zipFile.Split(Path.DirectorySeparatorChar).Last()));
+                    Console.WriteLine("    => Destination: {0}", Path.Combine(modName, fileName));
+                    File.Copy(zipFile, Path.Combine(modName, fileName));
                 }
             }
           
