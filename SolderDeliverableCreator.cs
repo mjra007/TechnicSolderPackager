@@ -38,7 +38,7 @@ namespace TechnicSolderPackager
                 Console.WriteLine(mod);
                 Directory.CreateDirectory(Path.Combine("builds", folderModName, "mods"));
                 File.Copy(mod, Path.Combine("builds", folderModName, "mods", fileName));
-                ZipFile.CreateFromDirectory(Path.Combine("builds", folderModName), Path.Combine("builds", fileNameNoJar + ".zip"));
+                ZipFile.CreateFromDirectory(Path.Combine("builds", folderModName), Path.Combine("builds", fileNameNoJar + ".zip"), CompressionLevel.NoCompression, false);
                 Directory.Delete(Path.Combine("builds", folderModName), true);
             }
 
