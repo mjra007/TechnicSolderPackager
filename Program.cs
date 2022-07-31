@@ -1,5 +1,4 @@
 ﻿using TechnicSolderPackager;
- 
 
 switch (args[0])
 {
@@ -25,6 +24,9 @@ switch (args[0])
         break;
     case "delta":
         new VersionDelta().CompareVersions(args);
+        break;
+    case "createVersion":
+        new VersionCreator(args);
         break;
 }
 

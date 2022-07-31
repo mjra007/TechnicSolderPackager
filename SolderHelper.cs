@@ -45,6 +45,130 @@ namespace TechnicSolderPackager
             }
         }
 
+        public void CreateModpackVersion(string version, string minecraftVersion, string modapckNumber)
+        {
+            driver.Navigate().GoToUrl($"http://{IP}/modpack/add-build/{modapckNumber}");
+            driver.FindElement(By.Id("version")).SendKeys(version);
+            new SelectElement(driver.FindElement(By.Name("minecraft")))
+                .SelectByValue(minecraftVersion);
+            new SelectElement(driver.FindElement(By.Name("clone"))).Options.Last().Click();
+              //  .SelectByText(version); 
+
+            var button = driver.FindElement(By.ClassName("btn-success"));
+            button.Click();
+        }
+
+        public string GetModpackIndex(string modpackSlug)
+        {
+            driver.Navigate().GoToUrl($"http://{IP}/modpack/list");
+            driver.FindElement(By.XPath("//*[@id=\"dataTables_filter\"]/label/input")).SendKeys(modpackSlug);
+
+            string href =  driver.FindElement(By.XPath("//*[@id=\"dataTables\"]/tbody/tr/td[7]/a[1]")).GetAttribute("href");
+            string[] splitHref = href.Split('/');
+            string index = splitHref.Last();
+            return index;
+        }
+
+
+        public string GetModpackVersionIndex(string modpackIndex, string version)
+        {
+            driver.Navigate().GoToUrl($"http://{IP}/modpack/view/{modpackIndex}");
+            driver.FindElement(By.XPath("//*[@id=\"dataTables_filter\"]/label/input")).SendKeys(version);
+            string index = driver.FindElement(By.XPath("//*[@id=\"dataTables\"]/tbody/tr/td[1]")).Text;
+            return index;
+        }
+
+
+        public void RemoveModFromModpack(string modSlug, string modVersion, string modpack, string modpackVersion)
+        {             string modpackIndex = GetModpackIndex(modpack);
+            string modpackVersionIndex = GetModpackVersionIndex(modpackIndex, modpackVersion);
+            driver.Navigate().GoToUrl($"http://{IP}/modpack/build/{modpackVersionIndex}");
+            driver.FindElement(By.XPath("//*[@id=\"mod-list_filter\"]/label/input"))
+                .SendKeys(modSlug+" "+ modVersion);
+            var button = driver.FindElements(By.XPath("//*[@id=\"mod-list\"]/tbody/tr/td[3]/form/button"));
+            if(button.Count > 0)
+            {
+                button.First().Click();
+                Console.WriteLine($"Removed {driver.FindElement(By.XPath("//*[@id=\"mod-list\"]/tbody/tr/td[1]")).Text}");
+                if (WasActionSuccessful())
+                {
+                    Console.WriteLine($"[SUCCESS] Mod: {modSlug}, version: {modVersion} was removed!");
+                }
+                else
+                {
+                    Console.WriteLine($"[FAIL] Mod: {modSlug}, version: {modVersion} failed to be removed!");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Could not find {modSlug} to remove! Maybe it is not present already.");
+            }
+
+
+                
+        }
+
+        public void ChangeVersionOfMod(string modSlug, string modVersion, string modpack, string modpackVersion)
+        {
+            string modpackIndex = GetModpackIndex(modpack);
+            string modpackVersionIndex = GetModpackVersionIndex(modpackIndex, modpackVersion);
+            driver.Navigate().GoToUrl($"http://{IP}/modpack/build/{modpackVersionIndex}");
+            driver.FindElement(By.XPath("//*[@id=\"mod-list_filter\"]/label/input")).SendKeys(modSlug+" "+modVersion);
+            new SelectElement(driver.FindElement(By.Name("version")))
+                .SelectByText(modVersion);
+            driver.FindElement(By.XPath("//*[@id=\"mod-list\"]/tbody/tr[1]/td[2]/form/div/span/button")).Click();
+            if (WasActionSuccessful())
+            {
+                Console.WriteLine($"[SUCCESS] Mod: {modSlug}, version: {modVersion} was changed!");
+            }
+            else
+            {
+                Console.WriteLine($"[FAIL] Mod: {modSlug}, version: {modVersion} failed to be changed!");
+            }
+        }
+
+        public void AddModToModpack(string modSlug, string modVersion, string modpack, string modpackVersion)
+        {
+            string modpackIndex = GetModpackIndex(modpack);
+            string modpackVersionIndex = GetModpackVersionIndex(modpackIndex, modpackVersion);
+            driver.Navigate().GoToUrl($"http://{IP}/modpack/build/{modpackVersionIndex}");
+            
+            driver.FindElement(By.XPath("//*[@id=\"mod-list-add\"]/td[1]/div/div")).Click();
+            ClickOnDivSelectElement(By.XPath("/html/body/div[2]/div"), modSlug, false);
+
+            driver.FindElement(By.XPath("//*[@id=\"mod-list-add\"]/td[2]/div")).Click();
+            ClickOnDivSelectElement(By.XPath("/html/body/div[3]/div"), modVersion, false);
+           
+            driver.FindElement(By.XPath("//*[@id=\"mod-list-add\"]/td[3]/button")).Click();
+
+            if (WasActionSuccessful())
+            {
+                Console.WriteLine($"[SUCCESS] Mod: {modSlug}, version: {modVersion} was added!");
+            }
+            else
+            { 
+                Console.WriteLine($"[FAIL] Mod: {modSlug}, version: {modVersion} failed to be added!");
+            }
+        }
+         
+        private bool WasActionSuccessful()
+        {
+            Thread.Sleep(1000);
+            return driver.FindElements(By.ClassName("alert-success")).Count > 0;
+        }
+
+        public void ClickOnDivSelectElement(By by, string elementToClick, bool text)
+        { 
+            foreach (IWebElement element in driver.FindElement(by).FindElements(By.TagName("div"))) 
+            {
+
+                 if (element.GetAttribute("data-value").Equals(elementToClick))
+                        element.Click();
+         
+
+            }
+        }
+
         public bool Login(string email, string password)
         {
             driver.Navigate().GoToUrl($"http://{IP}/login");
@@ -70,7 +194,7 @@ namespace TechnicSolderPackager
             return true;
         } 
 
-        public IEnumerable<string> GetVersions(string slug)
+        public IEnumerable<string> GetModVersions(string slug)
         {
             if (DoesModExist(slug))
             {
@@ -94,7 +218,7 @@ namespace TechnicSolderPackager
             }
         }
         
-        public void AddVersion(int modID, string version)
+        public void AddModVersion(int modID, string version)
         {
             driver.Navigate().GoToUrl($"http://{IP}/mod/view/{modID}"); 
             driver.FindElement(By.Name("add-version")).SendKeys(version);

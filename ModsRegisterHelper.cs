@@ -62,8 +62,8 @@ namespace TechnicSolderPackager
                 }
                 else
                 {
-                    solderHelper.AddVersion(solderHelper.GetModID(mod.name), mod.version);
-                    if (solderHelper.GetVersions(mod.name).Contains(mod.version) == false)
+                    solderHelper.AddModVersion(solderHelper.GetModID(mod.name), mod.version);
+                    if (solderHelper.GetModVersions(mod.name).Contains(mod.version) == false)
                     {
                         Console.WriteLine("Failed to add version {0} of {1}", mod.version, mod.name);
                     }

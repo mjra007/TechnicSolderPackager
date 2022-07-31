@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace TechnicSolderPackager
 {
-    internal class VersionDelta
+    public class VersionDelta
     {
 
         public HttpClient client = new();
@@ -24,6 +24,8 @@ namespace TechnicSolderPackager
 
             List<Mod> allModsNewVersion = BuildNewModsList(); 
             List<Mod> allModsOldVersion = GetModsInVersion(modpackSlug, GetLatestVersion(modpackSlug, apiIP), apiIP).ToList();
+
+            foreach(var mod in allModsNewVersion)  mod.url = null;  
 
             List<Mod> removedMods = GetRemovedMods(allModsNewVersion, allModsOldVersion);
             List<Mod> versionChanges = GetVersionChanges(allModsNewVersion, allModsOldVersion);
@@ -136,8 +138,6 @@ namespace TechnicSolderPackager
             }
             return removedMods;
         }
-
-
 
         public IEnumerable<Mod> GetModsInVersion(string modpackSlug, string version, string IP)
         {
