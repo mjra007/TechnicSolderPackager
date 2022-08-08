@@ -44,7 +44,6 @@ namespace TechnicSolderPackager
 
             ZipFile.CreateFromDirectory($"config", Path.Combine("builds", $"config-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
             ZipFile.CreateFromDirectory($"animation", Path.Combine("builds", $"animation-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
-            ZipFile.CreateFromDirectory($"customnpcs", Path.Combine("builds", $"customnpcs-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
             ZipFile.CreateFromDirectory($"resources", Path.Combine("builds", $"resources-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
             Console.WriteLine($"{packname}-{packVersion}.zip ");
             File.Delete($"{packname}-{packVersion}.zip");
