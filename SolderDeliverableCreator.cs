@@ -24,16 +24,27 @@ namespace TechnicSolderPackager
             }
 
             //Changing the modnames ensures compatiblity with technic solder naming conventions
-            ApplyNewModNames(mods, modNamesOverride);
+          //  ApplyNewModNames(mods, modNamesOverride);
 
             //get new paths after the rename
-            mods = Directory.GetFiles(currentPath).Where(s => s.Contains("jar")).ToArray();
+            //mods = Directory.GetFiles(currentPath).Where(s => s.Contains("jar")).ToArray();
 
             foreach (string mod in mods)
-            {
+            { 
                 string fileName = mod.Split(Path.DirectorySeparatorChar).Last();
-                string fileNameNoJar = fileName.Replace(".jar", "");
-                string folderModName = fileName.Split("-")[0];
+               
+                string newName = fileName;
+                foreach (string originalName in modNamesOverride.Keys)
+                {
+                    if (fileName.StartsWith(originalName))
+                    {
+                        newName = newName.Replace(originalName, modNamesOverride[originalName]);
+
+                        Console.WriteLine("  Transformed mod folder name: \"{0}\" => \"{1}\"", fileName, newName); 
+                    }
+                }
+                string folderModName = newName.Split("-")[0]; 
+                string fileNameNoJar = newName.Replace(".jar", "");
 
                 Console.WriteLine(mod);
                 Directory.CreateDirectory(Path.Combine("builds", folderModName, "mods"));
@@ -43,6 +54,7 @@ namespace TechnicSolderPackager
             }
 
             ZipFile.CreateFromDirectory($"config", Path.Combine("builds", $"config-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
+            ZipFile.CreateFromDirectory($"scripts", Path.Combine("builds", $"scripts-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
             ZipFile.CreateFromDirectory($"animation", Path.Combine("builds", $"animation-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
             ZipFile.CreateFromDirectory($"resources", Path.Combine("builds", $"resources-{ packVersion}.zip"), CompressionLevel.NoCompression, includeBaseDirectory: true);
             Console.WriteLine($"{packname}-{packVersion}.zip ");
@@ -72,6 +84,18 @@ namespace TechnicSolderPackager
 
             }
         }
+
+        public void ApplyNewModName(string modFolder, string newFolderName)
+        {
+            Console.WriteLine("  Transformed jar name: \"{0}\" => \"{1}\"", modFolder, newFolderName);
+            //There is no official method to rename things in c# so you have to use File.Move
+            //However File.Move will not work if the name change is just changing the letter case therefore this hack is needed to ensure the file name is changed
+            string temporaryName = "asdadadadadadatemp" + modFolder;
+            File.Move(modFolder, temporaryName);
+            File.Move(temporaryName, newFolderName);
+        }
+
+ 
 
        public static Dictionary<string, string> GetModNameOverrides()
         {
